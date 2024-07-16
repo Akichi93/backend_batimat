@@ -15,16 +15,7 @@ class SupplierController extends Controller
         $this->supplier = $supplier;
     }
 
-    /*
-      |----------------------------------------------------
-      | Liste des fournisseurs
-      |----------------------------------------------------
-      |
-      | Cette fonction permet d'afficher
-      | la liste de tous les fournisseurs avec
-      | la possibilité de faire une recherche.
-      |
-     */
+ 
 
     public function getSupplier()
     {
@@ -40,21 +31,12 @@ class SupplierController extends Controller
         }
     }
 
-      /*
-      |----------------------------------------------------
-      | Ajoût des clients
-      |----------------------------------------------------
-      |
-      | Cette fonction permet d'afficher
-      | la liste de tous les clients pour une entreorises 
-      | spécifique qvec la possibilité de faire une recherche.
-      |
-     */
+   
 
      public function postSupplier(SupplierStoreRequest $request)
      {
  
-         // Validation du formulaire
+         // Form validate
          $validated = $request->validated();
  
          // Get data

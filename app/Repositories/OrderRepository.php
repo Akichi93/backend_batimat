@@ -43,6 +43,7 @@ class OrderRepository extends BaseRepository
         $orders = new Order();
         $orders->uuidOrder = $data['uuidOrder'];
         $orders->payment_method = $data['payment_method'];
+        $orders->total_amount = $data['total_amount'];
         $orders->customer_id = $id;
         $orders->save();
 
@@ -58,7 +59,7 @@ class OrderRepository extends BaseRepository
                     'uuidOrder' => $orders->uuidOrder,
                     'quantity' => $productInfo['quantity'],
                     'unit_price' => $productInfo['unit_price'],
-                    'total_price' => $productInfo['amount'],
+                    'totel_price' => $productInfo['amount'],
                 ]);
 
                 // Update product quantity

@@ -18,12 +18,11 @@ class OrderController extends Controller
 
     /*
       |----------------------------------------------------
-      | Liste des clients
+      | Order list
       |----------------------------------------------------
       |
-      | Cette fonction permet d'afficher
-      | la liste de tous les clients pour une entreorises 
-      | spécifique qvec la possibilité de faire une recherche.
+      | This function displays
+      | a list of all orders .
       |
      */
 
@@ -43,20 +42,17 @@ class OrderController extends Controller
 
     /*
       |----------------------------------------------------
-      | Ajoût des clients
+      | Adding orders
       |----------------------------------------------------
       |
-      | Cette fonction permet d'afficher
-      | la liste de tous les clients pour une entreorises 
-      | spécifique qvec la possibilité de faire une recherche.
+      | This function lets you add orders
       |
      */
 
     public function postOrder(OrderStoreRequest $request)
     {
-        Log::info($request->all());
 
-        // Validation du formulaire
+        // Form validation
         $validated = $request->validated();
 
         // Get data

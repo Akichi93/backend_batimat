@@ -16,14 +16,13 @@ class CustomerController extends Controller
         $this->customer = $customer;
     }
 
-    /*
+     /*
       |----------------------------------------------------
-      | Liste des clients
+      | Customer list
       |----------------------------------------------------
       |
-      | Cette fonction permet d'afficher
-      | la liste de tous les clients pour une entreorises 
-      | spécifique qvec la possibilité de faire une recherche.
+      | This function displays
+      | a list of all customers .
       |
      */
 
@@ -43,19 +42,17 @@ class CustomerController extends Controller
 
     /*
       |----------------------------------------------------
-      | Ajoût des clients
+      | Adding customers
       |----------------------------------------------------
       |
-      | Cette fonction permet d'afficher
-      | la liste de tous les clients pour une entreorises 
-      | spécifique qvec la possibilité de faire une recherche.
+      | This function lets you add customers
       |
      */
 
     public function postCustomer(CustomerStoreRequest $request)
     {
 
-        // Validation du formulaire
+        // Form validation
         $validated = $request->validated();
 
         // Get data
