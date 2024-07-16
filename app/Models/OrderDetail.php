@@ -14,7 +14,8 @@ class OrderDetail extends Model
         'product_id',
         'uuidOrder',
         'quantity',
-        'unit_price'
+        'unit_price',
+        'totel_price'
     ];
 
     public function order()

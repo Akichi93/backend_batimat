@@ -12,7 +12,8 @@ class Order extends Model
     protected $fillable = [
         'customer_id',
         'uuidOrder',
-        'payment_method'
+        'payment_method',
+        'total_amount'
     ];
 
     public function customer()

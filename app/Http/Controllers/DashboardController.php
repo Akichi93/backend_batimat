@@ -16,12 +16,23 @@ class DashboardController extends Controller
         $totalOrders = Order::count();
         $totalCustomers = Customer::count();
         $totalSuppliers = Supplier::count();
+        $suppliers = Supplier::withCount('products')->get();
+
+
+        $formattedSuppliers = $suppliers->map(function ($supplier) {
+            return [
+
+                'name' => $supplier->name,
+                'y' => $supplier->products_count,
+            ];
+        });
 
         $data = [
             'total_products' => $totalProducts,
             'total_orders' => $totalOrders,
             'total_customers' => $totalCustomers,
             'total_suppliers' => $totalSuppliers,
+            'suppliers' => $formattedSuppliers,
         ];
 
         return response()->json($data);

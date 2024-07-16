@@ -36,42 +36,43 @@ class OrderRepository extends BaseRepository
     }
 
     public function postOrder(array $data)
-    {
-        $id = Customer::where('uuidCustomer', $data['customer_id'])->value('id');
+{
+    $id = Customer::where('uuidCustomer', $data['customer_id'])->value('id');
 
-        try {
-            $orders = new Order();
-            $orders->uuidOrder = $data['uuidOrder'];
-            $orders->payment_method = $data['payment_method'];
-            $orders->customer_id = $id;
-            $orders->save();
+    try {
+        $orders = new Order();
+        $orders->uuidOrder = $data['uuidOrder'];
+        $orders->payment_method = $data['payment_method'];
+        $orders->customer_id = $id;
+        $orders->save();
 
-            foreach ($data['products'] as $productInfo) {
+        foreach ($data['products'] as $productInfo) {
 
-                $product = Product::where('uuidProduct', $productInfo['productId'])->first();
+            $product = Product::where('uuidProduct', $productInfo['productId'])->first();
 
-                if ($product) {
+            if ($product) {
+                // Create order detail
+                OrderDetail::create([
+                    'order_id' => $orders->id,
+                    'product_id' => $product->id,
+                    'uuidOrder' => $orders->uuidOrder,
+                    'quantity' => $productInfo['quantity'],
+                    'unit_price' => $productInfo['unit_price'],
+                    'total_price' => $productInfo['amount'],
+                ]);
 
-                    OrderDetail::create([
-                        'order_id' => $orders->id,
-                        'product_id' => $product->id,
-                        'uuidOrder' => $orders->uuidOrder,
-                        'quantity' => $productInfo['quantity'],
-                        'unit_price' => $productInfo['unit_price'],
-                        'total_price' => $productInfo['amount'],
-                    ]);
-                }
+                // Update product quantity
+                $newQuantity = $product->quantity - $productInfo['quantity'];
+                $product->update(['quantity' => $newQuantity]);
             }
-
-
-
-
-            return response()->json($orders);
-        } catch (\Exception $e) {
-
-            return response()->json(['message' => 'An error occurred while creating the order.'], 500);
         }
-    }
+
+        return response()->json($orders);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'An error occurred while creating the order.'], 500);
+    } 
+}
+
 
     public function editOrder($uuidOrder)
     {

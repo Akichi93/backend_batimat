@@ -16,17 +16,13 @@ class ProductController extends Controller
         $this->product = $product;
     }
 
-    /*
-      |----------------------------------------------------
-      | Liste des clients
-      |----------------------------------------------------
-      |
-      | Cette fonction permet d'afficher
-      | la liste de tous les clients pour une entreorises 
-      | spécifique qvec la possibilité de faire une recherche.
-      |
+    /**
+     * Get all products.
+     *
+     * Retrieves a list of all products.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-
     public function getProduct()
     {
         try {
@@ -41,68 +37,114 @@ class ProductController extends Controller
         }
     }
 
-    /*
-      |----------------------------------------------------
-      | Ajoût des clients
-      |----------------------------------------------------
-      |
-      | Cette fonction permet d'afficher
-      | la liste de tous les clients pour une entreorises 
-      | spécifique qvec la possibilité de faire une recherche.
-      |
+    /**
+     * Store a new product.
+     *
+     * Stores a new product based on the incoming request.
+     *
+     * @param  \App\Http\Requests\ProductStoreRequest  $request
+     * @return \Illuminate\Http\JsonResponse
      */
-
     public function postProduct(ProductStoreRequest $request)
     {
+        // Log the incoming request data
         Log::info($request->all());
 
-        // Validation du formulaire
+        // Validate the incoming request
         $validated = $request->validated();
 
-        // Get data
+        // Get data from the validated request
         $data = $request->all();
 
-        // Insert in database
-        $Data = $this->product->postproduct($data);
+        // Insert product into the database
+        $product = $this->product->postProduct($data);
 
-        if ($Data) {
-            return response()->json($Data);
+        if ($product) {
+            return response()->json($product);
         }
     }
 
+    /**
+     * Edit a product.
+     *
+     * Retrieves a specific product for editing.
+     *
+     * @param  string  $uuidProduct
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function editProduct($uuidProduct)
     {
-        $products = $this->product->editProduct($uuidProduct);
-        return response()->json($products);
+        $product = $this->product->editProduct($uuidProduct);
+        return response()->json($product);
     }
 
+    /**
+     * Update a product.
+     *
+     * Updates a specific product based on the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $uuidProduct
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateProduct(Request $request, $uuidProduct)
     {
-        // Get data
+        // Get data from the incoming request
         $data = $request->all();
-        $Data = $this->product->updateProduct($uuidProduct, $data);
-        if ($Data) {
-            return response()->json($Data);
+
+        // Update product in the database
+        $product = $this->product->updateProduct($uuidProduct, $data);
+
+        if ($product) {
+            return response()->json($product);
         }
     }
 
+    /**
+     * Update product quantity.
+     *
+     * Updates the quantity of a specific product based on the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $uuidProduct
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateQuantity(Request $request, $uuidProduct)
     {
-        // Get data
+        // Get data from the incoming request
         $data = $request->all();
-        $products = $this->product->updateQuantity($uuidProduct, $data);
-        return response()->json($products);
+
+        // Update product quantity in the database
+        $product = $this->product->updateQuantity($uuidProduct, $data);
+
+        return response()->json($product);
     }
 
+    /**
+     * Get product price.
+     *
+     * Retrieves the price of a specific product.
+     *
+     * @param  string  $uuidProduct
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getProductPrice($uuidProduct)
     {
-        $products = $this->product->getProductPrice($uuidProduct);
-        return response()->json($products);
-    } 
+        $price = $this->product->getProductPrice($uuidProduct);
+        return response()->json($price);
+    }
 
+    /**
+     * Get product quantity.
+     *
+     * Retrieves the quantity of a specific product.
+     *
+     * @param  string  $uuidProduct
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getProductQuantity($uuidProduct)
     {
-        $products = $this->product->getProductQuantity($uuidProduct);
-        return response()->json($products);
-    } 
+        $quantity = $this->product->getProductQuantity($uuidProduct);
+        return response()->json($quantity);
+    }
 }

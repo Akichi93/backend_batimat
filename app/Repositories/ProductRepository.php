@@ -97,7 +97,7 @@ class ProductRepository extends BaseRepository
 
     public function getProductPrice($uuidProduct)
     {
-        $product = Product::where('uuidProduct', $uuidProduct)->value('amount');
+        $product = Product::select('amount','quantity')->where('uuidProduct', $uuidProduct)->first();
         return $product;
     }
 
